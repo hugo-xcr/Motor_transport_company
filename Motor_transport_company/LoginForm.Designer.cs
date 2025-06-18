@@ -160,6 +160,7 @@
             Controls.Add(txtUsername);
             Controls.Add(txtPassword);
             Name = "LoginForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "LoginForm";
             FormClosing += LoginForm_FormClosing;
             ResumeLayout(false);

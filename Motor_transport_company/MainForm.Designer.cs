@@ -262,6 +262,7 @@
             Controls.Add(btnEdit);
             Controls.Add(dataGridView);
             Name = "MainForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "MainForm";
             FormClosing += MainForm_FormClosing;
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();

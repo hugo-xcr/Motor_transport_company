@@ -1,17 +1,14 @@
-# Базовый образ для сборки
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+# Используем Windows-совместимый образ
+FROM mcr.microsoft.com/dotnet/sdk:9.0-preview-nanoserver-ltsc2022 AS build
+USER ContainerUser
 WORKDIR /src
-
-# Копируем файлы проекта и восстанавливаем зависимости
-COPY *.csproj .
-RUN dotnet restore
-
-# Копируем остальные файлы и собираем приложение
 COPY . .
-RUN dotnet publish -c Release -o /app
+RUN dotnet restore -p:EnableWindowsTargeting=true
+RUN dotnet publish -c Release -o /app -p:EnableWindowsTargeting=true -r win-x64 --self-contained true
 
-# Финальный образ для запуска
-FROM mcr.microsoft.com/dotnet/aspnet:7.0
+# Финальный образ
+FROM mcr.microsoft.com/dotnet/runtime:9.0-preview-nanoserver-ltsc2022
+USER ContainerUser
 WORKDIR /app
 COPY --from=build /app .
-ENTRYPOINT ["dotnet", "Motor_transport_company.dll"]
+ENTRYPOINT ["Motor_transport_company.exe"]

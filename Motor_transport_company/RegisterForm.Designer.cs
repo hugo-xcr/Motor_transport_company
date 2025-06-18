@@ -228,6 +228,7 @@
             Controls.Add(txtUsername);
             Controls.Add(txtPassword);
             Name = "RegisterForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "RegisterForm";
             ResumeLayout(false);
             PerformLayout();

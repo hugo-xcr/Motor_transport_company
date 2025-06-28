@@ -68,6 +68,7 @@
             dataGridView.Name = "dataGridView";
             dataGridView.Size = new Size(762, 246);
             dataGridView.TabIndex = 0;
+            dataGridView.CellContentClick += dataGridView_CellContentClick;
             // 
             // btnEdit
             // 

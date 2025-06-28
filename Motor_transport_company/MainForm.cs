@@ -193,13 +193,11 @@ namespace Motor_transport_company
 
                     try
                     {
-                        // Delete related bookings first
                         var deleteBookings = "DELETE FROM transport_company.booking WHERE trip_id = @id";
                         using var cmdBookings = new NpgsqlCommand(deleteBookings, connection, transaction);
                         cmdBookings.Parameters.AddWithValue("@id", id);
                         cmdBookings.ExecuteNonQuery();
 
-                        // Delete the trip
                         var deleteTrip = "DELETE FROM transport_company.trip WHERE id = @id";
                         using var cmdTrip = new NpgsqlCommand(deleteTrip, connection, transaction);
                         cmdTrip.Parameters.AddWithValue("@id", id);
@@ -207,7 +205,6 @@ namespace Motor_transport_company
 
                         transaction.Commit();
 
-                        // Remove from DataTable
                         var rowToDelete = _tripsTable.Rows.Cast<DataRow>()
                             .FirstOrDefault(r => (int)r["id"] == id);
                         if (rowToDelete != null)
@@ -258,7 +255,7 @@ namespace Motor_transport_company
                 using var connection = new NpgsqlConnection(_connectionString);
                 connection.Open();
 
-                // Find changed rows
+
                 var changes = _tripsTable.GetChanges();
                 if (changes == null || changes.Rows.Count == 0)
                 {
@@ -320,7 +317,6 @@ namespace Motor_transport_company
             btnSave.Visible = false;
             btnCancel.Visible = false;
 
-            // Revert changes
             if (_originalTripsTable != null)
             {
                 _tripsTable = _originalTripsTable.Copy();
@@ -361,6 +357,11 @@ namespace Motor_transport_company
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             LoadTripsData();
+        }
+
+        private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
